@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.stream.Collectors;
 
 @WebServlet("/servlet")
 public class Main extends HttpServlet {
@@ -25,11 +26,29 @@ public class Main extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        resp.getWriter().write("DoGet\n");
+        String uri = req.getRequestURI();
+        String parameters = formatParams(req);
+        resp.getWriter().write("DoGet\nURI: " + uri + "\nParams:\n" + parameters + "\n");
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String uri = req.getRequestURI();
+        String parameters = formatParams(req);
+        resp.getWriter().write("DoPost\nURI: " + uri + "\nParams:\n" + parameters + "\n");
     }
 
     @Override
     public void destroy() {
         log("DESTROY");
+    }
+
+    //Метод форматирования параметров идентичен для пост и гет
+    private String formatParams(HttpServletRequest req){
+        return req.getParameterMap().entrySet().stream().map(entry -> {
+                String parameter = String.join(" and ", entry.getValue());
+                return entry.getKey() + " => " + parameter;
+                })
+                .collect(Collectors.joining("\n"));
     }
 }
