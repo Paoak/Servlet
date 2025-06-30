@@ -2,6 +2,27 @@
 
 Простейшая демонстрация сервлетов на Java с примерами обработки GET/POST-запросов, загрузки файлов и передачи данных на JSP.
 
+## Структура проекта
+
+Servlet/
+
+├── src/
+
+│ └── main/
+
+│ └── java/
+
+│ └── horsov/
+
+│ ├── ForFileServlet.java
+
+│ ├── ForJspServlet.java
+
+│ ├── Main.java
+
+│ └── User.java
+
+
 ## Описание классов
 
 ### `Main.java`
